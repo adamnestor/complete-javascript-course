@@ -154,7 +154,6 @@ jonas['twitter'] = '@jonasschmedtman';
 console.log(jonas);
 
 console.log(`${jonas.firstName} has ${jonas.friends.length} friends, and his best friend is called ${jonas.friends[0]}`)
-*/
 
 //Object Methods///////////////////
 
@@ -165,23 +164,23 @@ const jonas = {
     job: 'teacher',
     friends: ['Michael', 'Peter', 'Steven'],
     hasDriversLicense: true,
-
+    
     // calcAge: function(birthYear){
-    //     return 2037 - birthYear;
-    // }
-
-    //    calcAge: function(){
-    //          return 2037 - this.birthYear;
-    //      }
-
-    calcAge: function () {
-        this.age = 2037 - this.birthYear;
-        return this.age;
-    },
-
-    getSummary: function(){
-        return `${this.firstName} is a ${this.calcAge()}-year old ${jonas.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} driver's license.`
-    }
+        //     return 2037 - birthYear;
+        // }
+        
+        //    calcAge: function(){
+            //          return 2037 - this.birthYear;
+            //      }
+            
+            calcAge: function () {
+                this.age = 2037 - this.birthYear;
+                return this.age;
+            },
+            
+            getSummary: function(){
+                return `${this.firstName} is a ${this.calcAge()}-year old ${jonas.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} driver's license.`
+            }
 };
 
 console.log(jonas.calcAge());
@@ -190,3 +189,107 @@ console.log(jonas['calcAge']());
 console.log(jonas.getSummary());
 
 console.log(jonas.age);
+
+// Loops ////////////////////////////////
+
+// console.log('Lifting weight rep 1');
+// console.log('Lifting weight rep 2');
+// console.log('Lifting weight rep 3');
+// console.log('Lifting weight rep 4');
+// console.log('Lifting weight rep 5');
+// console.log('Lifting weight rep 6');
+// console.log('Lifting weight rep 7');
+// console.log('Lifting weight rep 8');
+
+// for loops keep running while condition is TRUE
+for(let rep = 1; rep <= 8; rep++){
+    console.log(`Lifting weight rep ${rep}`);
+}
+
+const jonas = [
+    'Jonas',
+    'Schmedtmann',
+    2037 - 1991,
+    'teacher',
+    ['Michael', 'Peter', 'Steven'],
+    true
+];
+
+const types = [];
+
+for (let i = 0; i < jonas.length; i++) {
+    console.log(jonas[i], typeof jonas[i]);
+    //filling types array
+    //types[i] = typeof jonas[i];
+    types.push(typeof jonas[i]);
+}
+
+console.log(types);
+
+const years = [1991, 2007, 1969, 2020];
+const ages = [];
+
+for (let i = 0; i < years.length; i++) {
+    ages.push(2037 - years[i]);
+}
+
+console.log(ages);
+
+// continue and break
+console.log('only strings---------------')
+for (let i = 0; i < jonas.length; i++) {
+    if (typeof jonas[i] !== 'string') continue;
+    console.log(jonas[i], typeof jonas[i]);
+}
+
+console.log('break with number---------------')
+for (let i = 0; i < jonas.length; i++) {
+    if (typeof jonas[i] === 'number') break;
+    console.log(jonas[i], typeof jonas[i]);
+}
+
+//looping backward 
+
+const jonas = [
+    'Jonas',
+    'Schmedtmann',
+    2037 - 1991,
+    'teacher',
+    ['Michael', 'Peter', 'Steven'],
+    true
+];
+
+for(let i = jonas.length - 1; i >=0; i--){
+    console.log(i, jonas[i]);
+}
+
+//nested loops
+
+for (let exercise = 1; exercise <= 3; exercise++){
+    console.log(`------ Starting exercise ${exercise}`);
+    
+    for (let rep = 1; rep <= 5; rep++){
+        console.log(`Exercise ${exercise}: Lifting weight repetition ${rep}`);
+    }
+}
+*/
+
+// while loop
+
+// for(let rep = 1; rep <= 8; rep++){
+//     console.log(`Lifting weight rep ${rep}`);
+// }
+
+let rep = 1;
+while (rep <= 8) {
+    console.log(`WHILE: Lifting weight rep ${rep}`);
+    rep++;
+}
+
+let dice = Math.trunc(Math.random() * 6) + 1;
+
+while (dice !== 6) {
+    console.log(`You rolled a ${dice}`);
+    dice = Math.trunc(Math.random() * 6) + 1;
+    if (dice === 6) console.log('Loop is about to end');
+}
