@@ -308,17 +308,18 @@ const boardPassengers = function (n, wait) {
 };
 
 boardPassengers(180, 5);
-*/
 
 //////// CHALLENGE 2
 
 (function () {
   const header = document.querySelector('h1');
   header.style.color = 'red';
-
+  
   document.querySelector('body').addEventListener('click', function () {
     header.style.color = 'blue';
   });
 })();
 
 //By the time this callback here is executed, this IIFE is now long gone. It has already been excuted. And with it, this variable (header) is basically gone as well. But this function that we wrote is attached to the body element. And so it's waiting for some events to happen there. And when the events happen then this function is of course, executed. And, even thought this environment in which this function was created is already gone, it is still able to access the variables that were created in that variable by the time the function was born, so to say. We can say the header is in the backpack of this function.
+
+*/
