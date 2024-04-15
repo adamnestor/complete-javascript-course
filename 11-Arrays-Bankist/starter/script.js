@@ -60,6 +60,50 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+////////////
+
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+        <div class="movements__value">${mov}</div>
+      </div>
+    `;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+displayMovements(account1.movements);
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+createUsernames(accounts);
+
+// const username = user
+//   .toLowerCase()
+//   .split(' ')
+//   .map(name => name[0])
+//   // .map(function (name){
+//   //  return name[0];})
+//   //})
+//   .join('');
+
+//console.log(username);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -133,19 +177,83 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
   // 0: function(200)
   // 1: function(450)
   // And so on
-  */
+  
+  //for each with maps and sets
+  
+  const currencies = new Map([
+    ['USD', 'United States dollar'],
+    ['EUR', 'Euro'],
+    ['GBP', 'Pound sterling'],
+  ]);
+  
+  currencies.forEach(function (value, key, map) {
+    console.log(`${key}: ${value}`);
+  });
+  
+  //Set
+  const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+  console.log(currenciesUnique);
+  
+  currenciesUnique.forEach(function (value, _, map) {
+    console.log(`${value}: ${value}`);
+  });
+  
+  
+  //////CHALLENGE #1////////////////////
+  //////////////////////////////////////////
+  
+  const checkDogs = function (dogsJulia, dogsKate) {
+    const juliaCorrect = [...dogsJulia];
+    juliaCorrect.splice(0, 1);
+    juliaCorrect.splice(-2);
+    
+    const dogs = juliaCorrect.concat(dogsKate);
+    
+    dogs.forEach(function (dog, i) {
+      if (dog >= 3) {
+        console.log(`Dog number ${i + 1} is an adult, and is ${dog} years old`);
+      } else {
+        console.log(`Dog number ${i + 1} is still a puppy.`);
+      }
+    });
+    console.log(dogs);
+  };
+  
+  checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 
-//for each with maps and sets
+  
+  // Data transformations: map, filter, reduce
+  const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+  //Map- creates a second array after doing the transformation
+  const eurToUsd = 1.1;
+  
+  // const movementsUsd = movements.map(function(mov){
+    // return mov * eurToUsd;
+    // })
+    
+    const movementsUsd = movements.map(mov => mov * eurToUsd);
+    
+    console.log(movements);
+    console.log(movementsUsd);
+    
+    const movementsDescriptions = movements.map(
+      (mov, i) =>
+      `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+        mov
+      )}`
+    );
+    
+    
+    console.log(movementsDescriptions);
+*/
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+//Filter - creates a second array with only filtered elements
+const deposits = movements.filter(mov => mov > 0);
+// const deposits = movements.filter(function (mov) {
+//   return mov > 0;
+// });
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(deposits);
+console.log(withdrawals);
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
+//Reduce - Boils all array elements down to one single value (eg adding all elements together)
