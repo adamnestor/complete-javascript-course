@@ -60,7 +60,8 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
-////////////
+//////////////////////////////////
+////////////////////////////////////
 
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
@@ -73,7 +74,7 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__value">${mov}€</div>
       </div>
     `;
 
@@ -81,7 +82,36 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+///////////////////////////////
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance}€`;
+};
+calcDisplayBalance(account1.movements);
+
+//////////////////////////////////
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
+
+/////////////////////////////////////
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -91,19 +121,9 @@ const createUsernames = function (accs) {
       .join('');
   });
 };
-
 createUsernames(accounts);
 
-// const username = user
-//   .toLowerCase()
-//   .split(' ')
-//   .map(name => name[0])
-//   // .map(function (name){
-//   //  return name[0];})
-//   //})
-//   .join('');
-
-//console.log(username);
+////////////////////////////////////
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -224,6 +244,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
   
   // Data transformations: map, filter, reduce
   const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+  //////////////////////////////////
   //Map- creates a second array after doing the transformation
   const eurToUsd = 1.1;
   
@@ -245,15 +266,95 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
     
     
     console.log(movementsDescriptions);
-*/
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-//Filter - creates a second array with only filtered elements
-const deposits = movements.filter(mov => mov > 0);
-// const deposits = movements.filter(function (mov) {
-//   return mov > 0;
-// });
-const withdrawals = movements.filter(mov => mov < 0);
-console.log(deposits);
-console.log(withdrawals);
+    const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-//Reduce - Boils all array elements down to one single value (eg adding all elements together)
+    ////////////////////////////////////
+    //Filter - creates a second array with only filtered elements
+    const deposits = movements.filter(mov => mov > 0);
+    // const deposits = movements.filter(function (mov) {
+      //   return mov > 0;
+      // });
+      const withdrawals = movements.filter(mov => mov < 0);
+      console.log(deposits);
+      console.log(withdrawals);
+
+  //////////////////////////////////////////
+      //Reduce - Boils all array elements down to one single value (eg adding all elements together)
+      
+      console.log(movements);
+      
+      // accumulator -> snowball
+      // const balance = movements.reduce(function (acc, cur, i, arr) {
+//   //console.log(`Iteration ${i}: ${acc}`);
+//   return acc + cur;
+// }, 0);
+
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+
+console.log(balance);
+
+// Max value: reduce doesnt have to sum
+
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+
+console.log(max);
+
+const min = movements.reduce((acc, mov) => {
+  if (acc < mov) return acc;
+  else return mov;
+}, movements[0]);
+
+console.log(min);
+
+////// CHALLENGE 2 ////////////
+///////////////////////////////////////
+
+// Data 1: [5, 2, 4, 1, 15, 8, 3]
+// Data 2: [16. 6. 10, 5, 6, 1, 4]
+
+const calcAverageHumanAge = function (ages) {
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  
+  const adults = humanAges.filter(age => age >= 18);
+  console.log(humanAges);
+  console.log(adults);
+  
+  const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+
+  return average;
+};
+
+const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+console.log(avg1, avg2);
+
+///////// CHALLENGE 3////////////////
+//////////////////////////////////////////
+const chainCalcAvgHumanAge = ages =>
+ages
+.map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+    .filter(age => age >= 18)
+    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+
+const avg3 = chainCalcAvgHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const avg4 = chainCalcAvgHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+console.log(avg3, avg4);
+
+//Chaining Methods
+/////////////////////////////////////
+const eurToUsd = 1.1;
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+//PipeLine
+const totalDepositsUSD = movements
+.filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+  
+  console.log(totalDepositsUSD);
+*/
