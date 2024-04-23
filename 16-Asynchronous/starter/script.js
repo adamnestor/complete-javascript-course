@@ -131,35 +131,35 @@ getCountryAndNeighbor('mexico');
 //     });
 // };
 
-const getCountryData = function (country) {
-  // Country 1
-  getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
-    .then(data => {
-      renderCountry(data[0]);
-      const neighbour = data[0].borders[0];
+// const getCountryData = function (country) {
+//   // Country 1
+//   getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
+//     .then(data => {
+//       renderCountry(data[0]);
+//       const neighbour = data[0].borders[0];
 
-      if (!neighbour) throw new Error('No neighbour found!');
+//       if (!neighbour) throw new Error('No neighbour found!');
 
-      // Country 2
-      return getJSON(
-        `https://restcountries.com/v2/alpha/${neighbour}`,
-        'Country not found'
-      );
-    })
+//       // Country 2
+//       return getJSON(
+//         `https://restcountries.com/v2/alpha/${neighbour}`,
+//         'Country not found'
+//       );
+//     })
 
-    .then(data => renderCountry(data, 'neighbour'))
-    .catch(err => {
-      console.error(`${err} 💥💥💥`);
-      renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
-    })
-    .finally(() => {
-      countriesContainer.style.opacity = 1;
-    });
-};
+//     .then(data => renderCountry(data, 'neighbour'))
+//     .catch(err => {
+//       console.error(`${err} 💥💥💥`);
+//       renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
 
-btn.addEventListener('click', function () {
-  getCountryData('portugal');
-});
+// btn.addEventListener('click', function () {
+//   getCountryData('portugal');
+// });
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -215,6 +215,43 @@ whereAmI(19.037, 72.873);
 whereAmI(-33.933, 18.474);
 */
 //////////////////////////////////////////////////////////////
+/*
+console.log('Test Start');
+setTimeout(() => console.log('0 second timer'), 0);
+Promise.resolve('resolved promise 1').then(res => console.log(res));
+Promise.resolve('resolved promise 2').then(res => {
+    for (let i = 0; i < 10000000; i++){}
+    console.log(res);
+})
+console.log('Test end');
+*/
+// const lotteryPromise = new Promise(function (resolve, reject) {
+//   console.log('Lottery draw is coming!!!');
+
+//   setTimeout(function () {
+//     if (Math.random() >= 0.5) {
+//       resolve('You WIN💰');
+//     } else {
+//       reject(new Error('You LOSE 💩'));
+//     }
+//   }, 2000);
+// });
+
+// lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
+
+// //Promisifying setTimeout
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
+
+// wait(2)
+//   .then(() => {
+//     console.log('I waited 2 seconds');
+//     return wait(1);
+//   })
+//   .then(() => console.log('I waited 1 more second'));
 
 //////////////////////////////////////////////////////
 ///////////////CODING CHALLENGE 2
@@ -240,3 +277,23 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 
 GOOD LUCK 😀
 */
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+//Async await
+
+//works behind scenes async while other code runs
+
+const whereAmI = async function (country) {
+  //This is exactly the same
+  // fetch(`https://restcountries.com/v2/name/${country}`).then(res => console.log(res));
+
+  const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+  const data = await res.json()
+  console.log(data);
+  renderCountry(data[0]);
+};
+
+whereAmI('portugal');
+console.log('FIRST');
