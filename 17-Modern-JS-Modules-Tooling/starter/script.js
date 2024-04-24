@@ -1,22 +1,32 @@
-/*
-//importing module
-// import {
-//   addToCart,
-//   totalPrice as price,
-//   totalQuantity,
-// } from './shoppingCart.js';
+///////////////////////////////////////
+// Exporting and Importing in ES6 Modules
+
+// Importing module
+// import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
 // addToCart('bread', 5);
-// console.log(price, totalQuantity);
+// console.log(price, tq);
 
 console.log('Importing module');
+// console.log(shippingCost);
 
 // import * as ShoppingCart from './shoppingCart.js';
 // ShoppingCart.addToCart('bread', 5);
+// console.log(ShoppingCart.totalPrice);
+
+// import add, { addToCart, totalPrice as price, tq } from './shoppingCart.js';
+// console.log(price);
 
 import add, { cart } from './shoppingCart.js';
 add('pizza', 2);
-add('mac and cheese', 4);
+add('bread', 5);
+add('apples', 4);
+
 console.log(cart);
+
+
+
+///////////////////////////////////////
+// Top-Level Await (ES2022)
 
 // console.log('Start fetching');
 // const res = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -34,11 +44,15 @@ const getLastPost = async function () {
 const lastPost = getLastPost();
 console.log(lastPost);
 
-//not very clean
-//lastPost.then(last => console.log(last));
+// Not very clean
+// lastPost.then(last => console.log(last));
 
 const lastPost2 = await getLastPost();
 console.log(lastPost2);
+
+
+///////////////////////////////////////
+// The Module Pattern
 
 const ShoppingCart2 = (function () {
   const cart = [];
@@ -49,20 +63,20 @@ const ShoppingCart2 = (function () {
   const addToCart = function (product, quantity) {
     cart.push({ product, quantity });
     console.log(
-        `${quantity} ${product} added to cart. Shipping cost is $${shippingCost}`
+      `${quantity} ${product} added to cart (sipping cost is ${shippingCost})`
     );
-};
+  };
 
-const orderStock = function (product, quantity) {
+  const orderStock = function (product, quantity) {
     console.log(`${quantity} ${product} ordered from supplier`);
-};
+  };
 
-return {
+  return {
     addToCart,
     cart,
     totalPrice,
     totalQuantity,
-};
+  };
 })();
 
 ShoppingCart2.addToCart('apple', 4);
@@ -70,14 +84,20 @@ ShoppingCart2.addToCart('pizza', 2);
 console.log(ShoppingCart2);
 console.log(ShoppingCart2.shippingCost);
 
-// Export (doesnt work for some reason)
-export.addToCart = function (product, quantity) {
-    cart.push({ product, quantity });
-    console.log(
-        `${quantity} ${product} added to cart. Shipping cost is $${shippingCost}`
-    );
+
+///////////////////////////////////////
+// CommonJS Modules
+// Export
+export.addTocart = function(product, quantity) {
+  cart.push({ product, quantity });
+  console.log(
+    `${quantity} ${product} added to cart (sipping cost is ${shippingCost})`
+  );
 };
-*/
+
+// Import
+const { addTocart } = require('./shoppingCart.js');
+
 
 import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
 
